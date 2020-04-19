@@ -10,7 +10,7 @@ import java.util.List;
 
 import died.guia06.Curso;
 
-public class Registro {
+public class Registro  {
 
 	private final String FILE_PATH = "registro.log";
 	

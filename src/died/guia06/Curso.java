@@ -8,14 +8,7 @@ import javax.swing.JOptionPane;
 
 import died.guia06.util.Registro;
 
-/**
- * Clase que representa un curso. Un curso se identifica por su ID y por su nombre y ciclo lectivo.
- * Un curso guarda una lista de los inscriptos actuales que tienen.
- * Un curso, al aprobarlo, otorga una cantidad de creditos definidas en el curso.
- * Un curso requiere que para inscribirnos tengamos al menos la cantidad de creditos requeridas, y que haya cupo disponible
- * @author marti
- *
- */
+
 public class Curso {
 
 	private Integer id;
@@ -26,6 +19,77 @@ public class Curso {
 	private Integer creditos;
 	private Integer creditosRequeridos;
 	
+	public Integer getId() {
+		return id;
+	}
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+	public String getNombre() {
+		return nombre;
+	}
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+
+	public Integer getCicloLectivo() {
+		return cicloLectivo;
+	}
+
+
+	public void setCicloLectivo(Integer cicloLectivo) {
+		this.cicloLectivo = cicloLectivo;
+	}
+
+
+	public Integer getCupo() {
+		return cupo;
+	}
+
+
+	public void setCupo(Integer cupo) {
+		this.cupo = cupo;
+	}
+
+
+	public List<Alumno> getInscriptos() {
+		return inscriptos;
+	}
+
+
+	public void setInscriptos(List<Alumno> inscriptos) {
+		this.inscriptos = inscriptos;
+	}
+
+
+	public Integer getCreditos() {
+		return creditos;
+	}
+
+
+	public void setCreditos(Integer creditos) {
+		this.creditos = creditos;
+	}
+
+
+	public Integer getCreditosRequeridos() {
+		return creditosRequeridos;
+	}
+
+
+	public void setCreditosRequeridos(Integer creditosRequeridos) {
+		this.creditosRequeridos = creditosRequeridos;
+	}
+
+
+	
 	private Registro log;
 	
 	public Curso() {
@@ -35,20 +99,35 @@ public class Curso {
 	}
 	
 
-	/**
-	 * Este método, verifica si el alumno se puede inscribir y si es así lo agrega al curso,
-	 * agrega el curso a la lista de cursos en los que está inscripto el alumno y retorna verdadero.
-	 * Caso contrario retorna falso y no agrega el alumno a la lista de inscriptos ni el curso a la lista
-	 * de cursos en los que el alumno está inscripto.
-	 * 
-	 * Para poder inscribirse un alumno debe
-	 * 		a) tener como minimo los creditos necesarios
-	 *      b) tener cupo disponibles
-	 *      c) puede estar inscripto en simultáneo a no más de 3 cursos del mismo ciclo lectivo.
-	 * @param a
-	 * @return
-	 */
 	
+	public boolean verificarInscripcion (Alumno a) {
+		
+		if (a.creditosObtenidos()>this.creditos) {
+			if(this.cupo.intValue()>0) {
+				if (a.obtenerNCiclos(this.getCicloLectivo().intValue()) > 2) {
+					List<Curso> materias = a.getCursando();
+					this.inscriptos.add(a);
+					materias.add(this);
+					a.setCursando(materias);
+					return true;
+				}else {
+					JOptionPane.showMessageDialog(null, "El alumno ya esta inscripto en 3 cursos en el ciclo "+this.getCicloLectivo().toString());
+					return false;
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "No hay cupos para este curso");
+				return false;
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "El alumno "+a.getNombre()+" no tiene los creditos minimos para ingresar a este curso");
+			return false;
+		}
+		
+		
+
+	}
+	
+
 	public Boolean inscribir(Alumno a) throws IOException {
 		try {
 			log.registrar(this, "inscribir ",a.toString());
@@ -62,6 +141,32 @@ public class Curso {
 	/**
 	 * imprime los inscriptos en orden alfabetico
 	 */
+	public Alumno obtenerPrimerAlumno(List<Alumno> alumnos) {
+		Alumno a = new Alumno();
+		String nombre = "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz";
+		for (Alumno aux: alumnos) {
+			if (aux.getNombre().compareTo(nombre) < 0) {
+				nombre = aux.getNombre();
+				a = aux;
+			}
+		}
+		return a;
+	}
+	
+	public void imprimirAlumnosInscriptos () {
+		List<Alumno> listaAux = inscriptos;
+		String nombreActual;
+		Alumno a = new Alumno();
+		while(listaAux.size()!=0) {
+			a = obtenerPrimerAlumno(listaAux);
+			nombreActual = a.getNombre() ;
+			System.out.println(nombreActual);
+			listaAux.remove(a);
+		}
+	}
+	
+	
+	
 	public void imprimirInscriptos() throws IOException {
 		try {
 			log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");

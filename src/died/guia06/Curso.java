@@ -104,7 +104,7 @@ public class Curso {
 		
 		if (a.creditosObtenidos()>this.creditos) {
 			if(this.cupo.intValue()>0) {
-				if (a.obtenerNCiclos(this.getCicloLectivo().intValue()) > 2) {
+				if (a.nCiclos(this.getCicloLectivo().intValue()) > 2) {
 					List<Curso> materias = a.getCursando();
 					this.inscriptos.add(a);
 					materias.add(this);

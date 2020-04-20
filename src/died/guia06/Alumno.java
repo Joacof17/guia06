@@ -2,10 +2,11 @@ package died.guia06;
 
 import java.util.List;
 
+
 import javax.swing.JOptionPane;
 
 
-public class Alumno implements Comparable {
+public class Alumno  {
 
 	private String nombre;
 	private Integer nroLibreta;
@@ -57,6 +58,16 @@ public class Alumno implements Comparable {
 		//
 	}
 	
+	public int nCiclos (int ciclo) {
+		int contador = 0;
+		for (Curso c: cursando) {
+			if (c.getCicloLectivo().intValue()==ciclo) {
+				contador++;
+			}
+		}
+		return contador;
+	}
+	
 	public boolean equals (Alumno a, Alumno b) {
 		if (b.nroLibreta == a.nroLibreta) {
 			JOptionPane.showMessageDialog(null, "Son el mismo alumno");
@@ -66,26 +77,10 @@ public class Alumno implements Comparable {
 			return false;
 		}
 	}
+ 
 
-	@Override
-	public String comparar(Alumno a, Alumno b) {
-		String mensaje = new String();
-		if (a.nombre.compareTo(b.nombre) < 0 ) {
-			mensaje = a.nombre+ " figura en la lista antes que "+b.nombre;
-			JOptionPane.showMessageDialog(null, mensaje );
-			return mensaje;
-		} else if (a.nombre.compareTo(b.nombre) > 0 ) {
-			mensaje = b.nombre+ " figura en la lista antes que "+a.nombre;
-			JOptionPane.showMessageDialog(null, mensaje );
-			return mensaje;
-		} else {
-			mensaje = "Los alumnos tienen el mismo nombre o son el mismo alumno";
-			JOptionPane.showMessageDialog(null, mensaje );
-			return mensaje;
-		}
-		
-		
-	}
+	
+
 	
 	
 

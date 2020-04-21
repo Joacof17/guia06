@@ -82,8 +82,34 @@ public class App {
 
 		//FIN de asignacion de valores
 		
-		curso4.verificarInscripcion(alumno1);
-		curso3.verificarInscripcion(alumno3);
+		//no tenia creditos suficientes
+		try {
+			curso4.inscribirAlumno(alumno1);
+		}catch (RegistroAuditoriaException rae){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo RegistroAuditoriaException");
+		}catch (creditsException cre){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo creditsException");
+		}catch (cupoException cue){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo cupoException");
+		}catch (cicloException cie){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo cicloException");
+		}
+		try {
+			curso3.inscribirAlumno(alumno3);
+		}catch (RegistroAuditoriaException rae){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo RegistroAuditoriaException");
+		}catch (creditsException cre){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo creditsException");
+		}catch (cupoException cue){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo cupoException");
+		}catch (cicloException cie){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo cicloException");
+		}
+		
+
+		
+		
+
 		JOptionPane.showMessageDialog(null, "La cantidad de cursos en este ciclo son: "+alumno6.nCiclos(2020));
 		JOptionPane.showMessageDialog(null, "Los creditos de "+alumno1.getNombre()+ " son "+alumno1.creditosObtenidos());
 		JOptionPane.showMessageDialog(null, "Los creditos de "+alumno2.getNombre()+ " son "+alumno2.creditosObtenidos());
@@ -92,11 +118,33 @@ public class App {
 		JOptionPane.showMessageDialog(null, "Los creditos de "+alumno5.getNombre()+ " son "+alumno5.creditosObtenidos());
 		JOptionPane.showMessageDialog(null, "Los creditos de "+alumno6.getNombre()+ " son "+alumno6.creditosObtenidos());
 		
-		curso1.verificarInscripcion(alumno6);
+		try {
+			curso1.inscribirAlumno(alumno6);
+		}catch (RegistroAuditoriaException rae){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo RegistroAuditoriaException");
+		}catch (creditsException cre){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo creditsException");
+		}catch (cupoException cue){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo cupoException");
+		}catch (cicloException cie){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo cicloException");
+		}
+
 		curso3.imprimirAlumnosInscriptos();
 		curso5.imprimirAlumnosInscriptos();
 		
-		curso5.verificarInscripcion(alumno1);
+		try {
+			curso5.inscribirAlumno(alumno1);
+		}catch (RegistroAuditoriaException rae){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo RegistroAuditoriaException");
+		}catch (creditsException cre){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo creditsException");
+		}catch (cupoException cue){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo cupoException");
+		}catch (cicloException cie){
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir. Excepcion del tipo cicloException");
+		}
+
 		curso5.imprimirAlumnosInscriptos();
 	}
 	

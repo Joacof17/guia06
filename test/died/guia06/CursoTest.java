@@ -109,30 +109,36 @@ class CursoTest {
 	}
 	
 	@Test
-	void testVerificarInscripcion () throws IOException {
+	void testInscribirAlumno () throws creditsException, cupoException, cicloException, RegistroAuditoriaException {
+		try {
+			// excpecion de auditoria de registro
+			cub.inscribirAlumno(alc);
+		} catch (RegistroAuditoriaException rae) {
+			JOptionPane.showMessageDialog(null, "La prueba funciono con exito");
+		}
 		try {
 			// no le alcancen los puntos
-			assertFalse(cua.inscribir(ala));
-		} catch (IOException ioe) {
-			JOptionPane.showMessageDialog(null, "El alumno "+ala.getNombre()+" no tiene los creditos minimos para ingresar a este curso");
+			cua.inscribirAlumno(ala);
+		} catch (creditsException cre) {
+			JOptionPane.showMessageDialog(null, "La prueba funciono con exito");
 		}
 		try {
 			// no tenga cupo
-			assertFalse(cuc.inscribir(ala));
-		} catch (IOException ioe) {
-			JOptionPane.showMessageDialog(null, "No hay cupos para este curso");
+			cuc.inscribirAlumno(ala);
+		} catch (cupoException cue) {
+			JOptionPane.showMessageDialog(null, "La prueba funciono con exito");
 		}
 		try {
 			// curse mas de tres
-			assertFalse(cud.inscribir(alc));
-		} catch (IOException ioe) {
-			JOptionPane.showMessageDialog(null, "El alumno ya esta inscripto en 3 cursos en el ciclo "+cud.getCicloLectivo().toString());
+			cud.inscribirAlumno(alc);
+		} catch (cicloException cie) {
+			JOptionPane.showMessageDialog(null, "La prueba funciono con exito");
 		}
 		try {
 			// esté todo bien
-			assertTrue(cua.inscribir(alb));
-		} catch (IOException ioe) {
-			JOptionPane.showMessageDialog(null, "El alumno "+alb.getNombre()+" se ha inscripto exitosamente");
+			cua.inscribirAlumno(alb);
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Algo salio mal.");
 		}
 
 

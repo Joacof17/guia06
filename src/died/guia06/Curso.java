@@ -109,8 +109,10 @@ public class Curso {
 	}
 	
 
-	
-	public boolean verificarInscripcion (Alumno a) {
+	/**
+	 * 
+	 * Antiguo metodo de inscripcion, sin excepciones
+	 * public boolean verificarInscripcion (Alumno a) {
 		
 		if (a.creditosObtenidos()>=this.creditosRequeridos) {
 			if(this.cupo.intValue()>0) {
@@ -138,16 +140,9 @@ public class Curso {
 
 	}
 	
-
-	public Boolean inscribir(Alumno a) throws IOException {
-		try {
-			log.registrar(this, "inscribir ",a.toString());
-		} catch (IOException ioe) {
-			JOptionPane.showMessageDialog(null, "No se pudo inscribir al alumno");
-		}
-		return false;
-	}
 	
+	*/
+
 	
 	/**
 	 * imprime los inscriptos en orden alfabetico
@@ -189,6 +184,47 @@ public class Curso {
 			JOptionPane.showMessageDialog(null, "No se pudo imprimir los alumnos inscriptos");
 		}
 	}
+	
+	public Boolean inscribir(Alumno a) throws IOException {
+		try {
+			log.registrar(this, "inscribir ",a.toString());
+		} catch (IOException ioe) {
+			JOptionPane.showMessageDialog(null, "No se pudo inscribir al alumno");
+		}
+		return false;
+	}
+	
+
+	public void inscribirAlumno(Alumno a) throws creditsException, cupoException, cicloException, RegistroAuditoriaException {
+		if (a.creditosObtenidos()>=this.creditosRequeridos) {
+			if(this.cupo.intValue()>0) {
+				if (a.nCiclos(this.getCicloLectivo().intValue()) < 3) {
+					try {
+						log.registrar(this, "inscribir ",a.toString());
+						List<Curso> materias = a.getCursando();
+						this.inscriptos.add(a);
+						materias.add(this);
+						a.setCursando(materias);
+						JOptionPane.showMessageDialog(null, "El alumno "+a.getNombre()+" se ha inscripto exitosamente");
+					} catch (IOException ioe) {
+						throw new RegistroAuditoriaException();
+					}
+
+				}else {
+					throw new cicloException();
+				}
+			} else {
+				throw new cupoException();
+			}
+		} else {
+			throw new creditsException();
+		}
+	}
+	
+	
+	
+	
+	
 
 
 }

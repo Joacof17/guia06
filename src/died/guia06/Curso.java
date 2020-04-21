@@ -19,6 +19,16 @@ public class Curso {
 	private Integer creditos;
 	private Integer creditosRequeridos;
 	
+	public void cursos(String a, Integer b, Integer c, Integer d, Integer e, Integer f, List<Alumno> g) {
+		this.setNombre(a);
+		this.setId(b);
+		this.setCupo(c);
+		this.setCicloLectivo(d);
+		this.setCreditosRequeridos(e);
+		this.setCreditos(f);
+		this.setInscriptos(g);
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -102,13 +112,14 @@ public class Curso {
 	
 	public boolean verificarInscripcion (Alumno a) {
 		
-		if (a.creditosObtenidos()>this.creditos) {
+		if (a.creditosObtenidos()>=this.creditosRequeridos) {
 			if(this.cupo.intValue()>0) {
-				if (a.nCiclos(this.getCicloLectivo().intValue()) > 2) {
+				if (a.nCiclos(this.getCicloLectivo().intValue()) < 3) {
 					List<Curso> materias = a.getCursando();
 					this.inscriptos.add(a);
 					materias.add(this);
 					a.setCursando(materias);
+					JOptionPane.showMessageDialog(null, "El alumno "+a.getNombre()+" se ha inscripto exitosamente");
 					return true;
 				}else {
 					JOptionPane.showMessageDialog(null, "El alumno ya esta inscripto en 3 cursos en el ciclo "+this.getCicloLectivo().toString());
@@ -157,11 +168,15 @@ public class Curso {
 		List<Alumno> listaAux = inscriptos;
 		String nombreActual;
 		Alumno a = new Alumno();
+		if (listaAux.size()==0) {
+			JOptionPane.showMessageDialog(null, "No hay alumnos inscriptos en este curso");
+		}else {
 		while(listaAux.size()!=0) {
 			a = obtenerPrimerAlumno(listaAux);
 			nombreActual = a.getNombre() ;
 			System.out.println(nombreActual);
 			listaAux.remove(a);
+		}
 		}
 	}
 	
@@ -171,7 +186,7 @@ public class Curso {
 		try {
 			log.registrar(this, "imprimir listado",this.inscriptos.size()+ " registros ");
 		} catch (IOException ioe) {
-			JOptionPane.showMessageDialog(null, "No se pudo imprimir loa alumnos inscriptos");
+			JOptionPane.showMessageDialog(null, "No se pudo imprimir los alumnos inscriptos");
 		}
 	}
 
